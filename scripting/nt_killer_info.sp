@@ -49,7 +49,10 @@ public void OnAllPluginsLoaded()
 {
 	ConVar cvarKIDVersion = FindConVar("kid_version");
 	
-	if(cvarKIDVersion != null) // convars persist after unload, so re-loads might fail if they depend on convars existence
+	// convars persist after unload, this can affect the behaviour other plugins if they assume the plugin is running if the convar exists
+	// the old plugin makes a kid_version convar so if it was unloaded while server was running this one will still fail to load
+	
+	if(cvarKIDVersion != null) 
 	{
 		SetFailState("[NT Killer Info] Error: A different Killer Info plugin is loaded");
 	}
