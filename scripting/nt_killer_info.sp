@@ -28,7 +28,7 @@ public Plugin myinfo = {
 	name = "NT Killer Info",
 	author = "bauxite, credits to Berni, gH0sTy, Smurfy1982, Snake60",
 	description = "Displays the name, weapon, health and class of player that killed you, optionally relays info to chat",
-	version = "0.3.0",
+	version = "0.3.1",
 	url = "https://github.com/bauxiteDYS/SM-NT-Killer-Info",
 };
 
@@ -172,8 +172,17 @@ public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast
 	{
 		return;
 	}
-
-	int healthLeft = GetClientHealth(attacker);
+	
+	int healthLeft;
+	
+	if(IsPlayerAlive(attacker)) // should work, otherwise might need to use Agiel's dead check stock
+	{
+		healthLeft = GetClientHealth(attacker);
+	}
+	else
+	{
+		healthLeft = 0;
+	}
 	
 	char weapon[32];
 	GetEventString(event, "weapon", weapon, sizeof(weapon));
